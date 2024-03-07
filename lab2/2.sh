@@ -2,4 +2,4 @@
 
 output_file="processes_start_in_sbin.txt"
 
-ps -ef | grep '/sbin/' | awk '{print $2}' > "$output_file"⏎    
+ps -ef | awk '$8 ~ /^\/sbin\// {print $2}'
