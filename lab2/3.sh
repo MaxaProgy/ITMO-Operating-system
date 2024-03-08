@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ps -eo pid,etime,command | sort -k2 -r | head -n 2 | awk '{print $1}'
+ps -eo pid,lstart,command | tail -n 4 | head -n 1
