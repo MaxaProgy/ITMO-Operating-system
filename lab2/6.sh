@@ -5,14 +5,14 @@ output_file="process_with_max_mem.out"
 pid_process_with_max_ram=0
 max_ram=0
 
-for path in $(find /proc -maxdepth 2 -wholename '/proc/[0-9]*/status' -type f -readable); do
+while read path; do
     rss=$(grep -s VmRSS $path | awk '{print $2}')
 
     if [[ $rss -gt $max_ram ]]; then
         max_ram=$rss
-        pid_process_with_max_ram=$(grep -s PID $path | head -1 | awk '{print $2}')
+        pid_process_with_max_ram=$(grep -si "pid" $path | head -1 | awk '{print $2}')
     fi
-done
+done < <(find /proc -maxdepth 2 -wholename '/proc/[0-9]*/status' -type f -readable)
 
 # grep -s VmRSS $(find /proc -maxdepth 2 -wholename '/proc/[0-9]*/status' -type f -readable) | awk '{print $2}' | sort -n | tail -1 > "$output_file"
 
