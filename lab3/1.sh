@@ -1,11 +1,12 @@
 #!/bin/bash
 
-start_script=$(date +"%Y-%m-%d_%H-%M-%S")
 report_file=$HOME/report
-mkdir test && 
+test=$HOME/test
+
+mkdir $test && 
     { 
-    echo "catalog test was created successfully" > $report_file
-    touch test/$start_script 
+    echo "catalog test was created successfully" >> $report_file
+    touch $test/$(date +"%Y-%m-%d_%H-%M-%S")
     }
 
-ping -c 1 www.net_nikogo.ru || echo "$(date +"%Y-%m-%d_%H-%M-%S") ERROR PING" >> $report_file
+ping -c 1 www.net_nikogo.ru || echo "$(date +"%Y-%m-%d_%H-%M-%S") Can't connect www.net_nikogo.ru" >> $report_file
