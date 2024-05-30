@@ -6,7 +6,7 @@ backup_report_file="$work_directory/backup-report"
 
 source_directory="$work_directory/source"
 if [ ! -d $source_directory ]; then
-	mkdir $s@ource_directory
+	mkdir $source_directory
 fi
 
 latest_backup=$(find $work_directory -maxdepth 1 -type d -name "Backup-*" -mtime -7 -print | sort -r | head -n 1)
