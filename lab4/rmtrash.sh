@@ -6,21 +6,31 @@ if [ $# -ne 1 ]; then
 fi
 
 file_name="$1"
+
+file_path="$(realpath "./$file_name")"
+
 trash_directory="$HOME/.trash"
 trash_log_file="$trash_directory/trash.log"
 
-if [ ! -d $trash_directory ]; then
-	mkdir $trash_directory
+mkdir -p "$trash_directory"
+if [ -f "$trash_log_file" ]; then
+	touch "$trash_log_file"
 fi
 
-if [ ! -e $file_name ]; then
+if [ -d "$file_name" ]
+then
+	echo "ERROR | It is directory"
+	exit 1
+fi
+
+if [ ! -f "$file_name" ]; then
 	echo "ERROR | File does not exist"
 	exit 1
 fi
 
 link_file_name=$(date +%s%N)
 
-ln $file_name "$trash_directory/$link_file_name"
+ln "$file_path" "$trash_directory/$link_file_name"
 
-rm $file_name
-echo "$PWD/$file_name $link_file_name" >> "$trash_log_file"
+rm "$file_path"
+echo "$file_path $link_file_name" >> "$trash_log_file"
